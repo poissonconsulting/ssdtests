@@ -8,6 +8,15 @@
 \description{
 Tests for ssdtools package.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/poissonconsulting/ssdtests}
+  \item \url{https://poissonconsulting.github.io/ssdtests/}
+  \item Report bugs at \url{https://github.com/poissonconsulting/ssdtests/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Joe Thorley \email{joe@poissonconsulting.ca} (\href{https://orcid.org/0000-0002-7683-4592}{ORCID})
 

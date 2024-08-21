@@ -5,9 +5,11 @@
 
 <!-- badges: start -->
 
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R-CMD-check](https://github.com/poissonconsulting/ssdtests/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/poissonconsulting/ssdtests/actions/workflows/R-CMD-check.yaml)
-[![Codecov test
-coverage](https://codecov.io/gh/poissonconsulting/ssdtests/graph/badge.svg)](https://app.codecov.io/gh/poissonconsulting/ssdtests)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/ssdtests)](https://cran.r-project.org/package=ssdtests)
 <!-- badges: end -->
 
 The goal of ssdtests is to test the ssdtools package.
