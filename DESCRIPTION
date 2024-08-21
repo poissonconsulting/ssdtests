@@ -29,3 +29,5 @@ Suggests:
 Config/testthat/edition: 3
 URL: https://github.com/poissonconsulting/ssdtests, https://poissonconsulting.github.io/ssdtests/
 BugReports: https://github.com/poissonconsulting/ssdtests/issues
+Imports: 
+    lifecycle
