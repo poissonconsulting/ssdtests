@@ -33,5 +33,6 @@ library(ssdtests)
 ```
 
 ```{r, results = "asis", echo = FALSE}
-cat(licensing_md())
+library(ssdtests)
+cat(ssdtests_licensing_md())
 ```
