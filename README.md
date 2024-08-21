@@ -12,7 +12,8 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 status](https://www.r-pkg.org/badges/version/ssdtests)](https://cran.r-project.org/package=ssdtests)
 <!-- badges: end -->
 
-The goal of ssdtests is to test the ssdtools package.
+The goal of ssdtests is to test the
+[ssdtools](https://github.com/bcgov/ssdtools) package.
 
 ## Installation
 
@@ -23,6 +24,8 @@ You can install the development version of ssdtests from
 # install.packages("pak")
 pak::pak("poissonconsulting/ssdtests")
 ```
+
+    #> Loading required package: ssdtools
 
 ## Licensing
 

@@ -2,6 +2,6 @@
 "_PACKAGE"
 
 ## usethis namespace: start
-#' @importFrom lifecycle deprecated
+#' @importFrom ssdtools ssd_fit_dists
 ## usethis namespace: end
 NULL
