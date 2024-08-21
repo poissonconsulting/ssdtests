@@ -7,17 +7,16 @@
 
 <!-- badges: end -->
 
-The goal of ssdtests is to …
+The goal of ssdtests is to test the ssdtools package.
 
 ## Installation
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
+You can install the development version of ssdtests from
+[GitHub](https://github.com/) with:
 
 ``` r
-library(ssdtests)
-## basic example code
+# install.packages("pak")
+pak::pak("poissonconsulting/ssdtests")
 ```
 
 ## Licensing
