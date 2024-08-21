@@ -21,15 +21,16 @@ Authors@R: c(
   )
 Description: Tests for ssdtools package.
 License: Apache License (== 2.0) | file LICENSE
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+URL: https://github.com/poissonconsulting/ssdtests,
+    https://poissonconsulting.github.io/ssdtests/
+BugReports: https://github.com/poissonconsulting/ssdtests/issues
+Depends: 
+    R (>= 4.1)
+Imports: 
+    lifecycle
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-URL: https://github.com/poissonconsulting/ssdtests, https://poissonconsulting.github.io/ssdtests/
-BugReports: https://github.com/poissonconsulting/ssdtests/issues
-Imports: 
-    lifecycle
-Depends: 
-    R (>= 4.1)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
