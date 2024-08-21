@@ -1,0 +1,29 @@
+Package: ssdtests
+Title: Tests for ssdtools
+Version: 0.0.0.9000
+Authors@R: c(
+    person("Joe", "Thorley", , "joe@poissonconsulting.ca", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-7683-4592")),
+    person("Rebecca", "Fisher", , "R.Fisher@aims.gov.au", role = "aut"),
+    person("David", "Fox", , "david.fox@environmetrics.net.au", role = "aut"),
+    person("Carl", "Schwarz", role = "aut"),
+    person("Angeline", "Tillmanns", role = "ctb"),
+    person("Seb", "Dalgarno", , "seb@poissonconsulting.ca", role = "ctb",
+           comment = c(ORCID = "0000-0002-3658-4517")),
+    person("Kathleen", "McTavish", role = "ctb"),
+    person("Doug", "Spry", role = "ctb"),
+    person("Rick", "van Dam", role = "ctb"),
+    person("Graham", "Batley", role = "ctb"),
+    person("Ali", "Azizishirazi", role = "ctb"),
+    person("Province of British Columbia", role = c("fnd", "cph")),
+    person("Environment and Climate Change Canada", role = c("fnd", "cph")),
+    person("Australian Government Department of Climate Change, Energy, the Environment and Water", role = c("fnd", "cph"))
+  )
+Description: Tests for ssdtools package.
+License: Apache License (== 2.0) | file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
