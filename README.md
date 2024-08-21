@@ -5,6 +5,7 @@
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/poissonconsulting/ssdtests/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/poissonconsulting/ssdtests/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/poissonconsulting/ssdtests/graph/badge.svg)](https://app.codecov.io/gh/poissonconsulting/ssdtests)
 <!-- badges: end -->
