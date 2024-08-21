@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![Codecov test
+coverage](https://codecov.io/gh/poissonconsulting/ssdtests/graph/badge.svg)](https://app.codecov.io/gh/poissonconsulting/ssdtests)
 <!-- badges: end -->
 
 The goal of ssdtests is to test the ssdtools package.
