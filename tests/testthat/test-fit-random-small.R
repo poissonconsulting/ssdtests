@@ -14,7 +14,7 @@ test_that("fail to fit random lnorm distributions with sample size 6 and pgtol 1
       for(i in 1:10^4) {
         data <- data.frame(Conc = ssd_rlnorm(6))
         fit <- ssd_fit_dists(data = data, dist = "lnorm", control = list(pgtol = 1e-8))
-      }), "failed to converge")
+      }, "failed to fit"), "failed to converge")
   })
 })
 
@@ -34,6 +34,6 @@ test_that("fail to fit random gamma distributions with sample size 6", {
       for(i in 1:10^4) {
         data <- data.frame(Conc = ssd_rgamma(6))
         fit <- ssd_fit_dists(data = data, dist = "lnorm", control = list(pgtol = 1e-8))
-      }), "failed to converge")
+      }, "failed to fit"), "failed to converge")
   })
 })
