@@ -1,0 +1,2 @@
+dist,npars,nobs,log_lik,aic,aicc,delta,weight
+lnorm,2,1000,-4335.99,8675.99,8676,0,1

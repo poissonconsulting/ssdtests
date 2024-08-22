@@ -25,8 +25,6 @@ You can install the development version of ssdtests from
 pak::pak("poissonconsulting/ssdtests")
 ```
 
-    #> Loading required package: ssdtools
-
 ## Licensing
 
 Copyright 2018-2024 Province of British Columbia  

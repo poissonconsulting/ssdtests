@@ -33,6 +33,5 @@ pak::pak("poissonconsulting/ssdtests")
 ```
 
 ```{r, results = "asis", echo = FALSE}
-library(ssdtests)
 cat(ssdtests::ssdtests_licensing_md())
 ```
