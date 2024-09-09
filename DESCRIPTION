@@ -33,6 +33,7 @@ Imports:
     readr,
     ssddata (>= 1.0.0)
 Suggests: 
+    glue,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
