@@ -3,7 +3,7 @@ pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   ssdtests: ssdtests.html
-last_built: 2024-09-10T01:23Z
+last_built: 2024-09-10T09:57Z
 urls:
   reference: https://poissonconsulting.github.io/ssdtests/reference
   article: https://poissonconsulting.github.io/ssdtests/articles
