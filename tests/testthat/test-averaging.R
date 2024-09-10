@@ -10,6 +10,6 @@ test_that("averaging results", {
     results$weighted[i] <- ssdtools::ssd_hc(fit, multi_est = FALSE)$est
   }
   expect_snapshot_data(results, "averaging")
-  results$change <- (results$weighted - results$multi) / results$weighted
+  results$change <- (results$multi - results$weighted) / results$weighted
   summary(results$change)
 })
