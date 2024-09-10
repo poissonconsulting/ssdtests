@@ -32,7 +32,8 @@ Imports:
     dplyr,
     readr,
     ssddata (>= 1.0.0)
-Suggests: 
+Suggests:
+    ggplot2,
     glue,
     knitr,
     rmarkdown,

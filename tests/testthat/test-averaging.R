@@ -3,7 +3,6 @@ test_that("averaging results", {
   items <- items[items != "ssd_fits"]
   results <- data.frame(item = items)
   for(i in seq_len(nrow(results))) {
-    print(results$item[i])
     code <- glue::glue("suppressWarnings(code <- ssdtools::ssd_fit_bcanz(data = ssddata::{results$item[i]}))")
     fit <- eval(parse(text = code))
     results$multi[i] <- ssdtools::ssd_hc(fit)$est
