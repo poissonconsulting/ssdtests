@@ -12,7 +12,22 @@
 #    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
-#
+
+test_that("ssd_fit_dists lnorm_lnorm unstable with censored data", {
+  data <- ssddata::ccme_boron
+  data$Other <- data$Conc
+  data$Conc <- data$Conc / max(data$Conc)
+  
+  set.seed(102)
+  fits <- ssd_fit_dists(data, right = "Other", dists = c("lnorm_lnorm"))
+  
+  tidy <- tidy(fits)
+  expect_s3_class(tidy, "tbl")
+  testthat::skip_on_ci()
+  testthat::skip_on_cran()
+  expect_snapshot_data(tidy, "lnorm_lnorm_no_se", digits = 3)
+})
+
 test_that("weibull is unstable", {
   data <- data.frame(Conc = c(
     868.24508,
