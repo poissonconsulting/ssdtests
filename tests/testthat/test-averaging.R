@@ -1,10 +1,8 @@
 test_that("averaging results", {
-  items <- data(package = "ssddata")$results[,"Item"]
-  items <- items[items != "ssd_fits"]
-  results <- data.frame(item = items)
-  for(i in seq_len(nrow(results))) {
-    code <- glue::glue("suppressWarnings(code <- ssdtools::ssd_fit_bcanz(data = ssddata::{results$item[i]}))")
-    fit <- eval(parse(text = code))
+  data_sets <- ssddata::ssd_data_sets()
+  results <- data.frame(item = names(data_sets))
+  for(i in seq_along(data_sets)) {
+    suppressWarnings(fit <- ssdtools::ssd_fit_bcanz(data = data_sets[[i]]))
     results$multi[i] <- ssdtools::ssd_hc(fit)$est
     results$weighted[i] <- ssdtools::ssd_hc(fit, multi_est = FALSE)$est
   }
