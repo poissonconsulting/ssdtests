@@ -26,7 +26,7 @@ URL: https://github.com/poissonconsulting/ssdtests,
 BugReports: https://github.com/poissonconsulting/ssdtests/issues
 Depends: 
     R (>= 4.1),
-    ssdtools (>= 1.0.6.9016)
+    ssdtools (>= 2.0.0)
 Imports:
     chk,
     dplyr,
