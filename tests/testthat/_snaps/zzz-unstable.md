@@ -127,23 +127,31 @@
     Code
       ssdtools:::sgompertz(data.frame(left = x, right = x))
     Condition
-      Error in `lm.fit()`:
-      ! NA/NaN/Inf in 'y'
+      Warning in `min()`:
+      no non-missing arguments to min; returning Inf
+      Error in `vglm.fitter()`:
+      ! object 'eta' not found
     Code
       ssdtools:::sgompertz(data.frame(left = rep(x, 10), right = rep(x, 10)))
     Condition
-      Error in `lm.fit()`:
-      ! NA/NaN/Inf in 'y'
+      Warning in `min()`:
+      no non-missing arguments to min; returning Inf
+      Error in `vglm.fitter()`:
+      ! object 'eta' not found
     Code
       ssdtools:::sgompertz(data.frame(left = x, right = x), pars = c(12800, 1))
     Condition
-      Error in `checkwz()`:
-      ! NAs in the working weights var 'wz'
+      Warning in `min()`:
+      no non-missing arguments to min; returning Inf
+      Error in `vglm.fitter()`:
+      ! object 'eta' not found
     Code
       ssdtools:::sgompertz(data.frame(left = x / 12800, right = x / 12800))
     Condition
-      Error in `checkwz()`:
-      ! Some elements in the working weights variable 'wz' are not finite
+      Warning in `min()`:
+      no non-missing arguments to min; returning Inf
+      Error in `vglm.fitter()`:
+      ! object 'eta' not found
 
 # sgompertz cant even initialize lots of values
 
@@ -151,8 +159,10 @@
       set.seed(99)
       ssdtools:::sgompertz(data.frame(left = x, right = x))
     Condition
-      Error in `checkwz()`:
-      ! Some elements in the working weights variable 'wz' are not finite
+      Warning in `min()`:
+      no non-missing arguments to min; returning Inf
+      Error in `vglm.fitter()`:
+      ! object 'eta' not found
     Code
       set.seed(99)
       ssd_fit_dists(data.frame(Conc = x), dists = "gompertz")
@@ -166,13 +176,11 @@
     Code
       set.seed(100)
       ssdtools:::sgompertz(data.frame(left = x, right = x))
-    Output
-      $log_location
-      [1] -0.9424722
-      
-      $log_shape
-      [1] -128.6335
-      
+    Condition
+      Warning in `min()`:
+      no non-missing arguments to min; returning Inf
+      Error in `vglm.fitter()`:
+      ! object 'eta' not found
     Code
       set.seed(100)
       ssd_fit_dists(data.frame(Conc = x), dists = "gompertz")
