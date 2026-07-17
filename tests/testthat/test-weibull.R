@@ -14,3 +14,17 @@ test_that("weibull sometimes fails to converge", {
     )
   })
 })
+
+test_that("weibull bootstraps anona", {
+  fit <- ssd_fit_dists(ssddata::anon_a, dists = "weibull")
+  withr::with_seed(50, {
+    hc <- ssd_hc(
+      fit,
+      nboot = 1000,
+      ci = TRUE,
+      ci_method = "weighted_samples",
+      samples = TRUE
+    )
+  })
+  expect_snapshot_data(hc, "hc_anona")
+})
