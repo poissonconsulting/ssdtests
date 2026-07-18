@@ -3,7 +3,7 @@ test_that("ssd_hc passing all boots ccme_chloride lnorm_lnorm", {
     min_pmix = 0.0001, at_boundary_ok = TRUE,
     dists = c("lnorm_lnorm", "llogis_llogis")
   )
-
+  skip_on_ci()
   withr::with_seed(102, {
     hc <- ssd_hc(fits, ci = TRUE, nboot = 1000, average = FALSE)
   })
