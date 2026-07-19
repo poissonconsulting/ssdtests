@@ -82,26 +82,24 @@ ep <- function(text) {
   invisible(eval(parse(text = text)))
 }
 
-test_dist2 <- function(dist, upadj = 0, multi = FALSE) {
-  if (!multi) {
-    withr::with_seed(97, {
-      data <- data.frame(Conc = ep(glue::glue("ssd_r{dist}(500)")))
-    })
-    fits <- ssd_fit_dists(data = data, dists = dist)
-    tidy <- tidy(fits)
-    testthat::expect_s3_class(tidy, "tbl_df")
-    testthat::expect_identical(names(tidy), c("dist", "term", "est", "se"))
-    testthat::expect_identical(tidy$dist[1], dist)
-    tidy$lower <- tidy$est - tidy$se * 3
-    tidy$upper <- tidy$est + tidy$se * 3
+test_dist2 <- function(dist, upadj = 0) {
+  withr::with_seed(97, {
+    data <- data.frame(Conc = ep(glue::glue("ssd_r{dist}(500)")))
+  })
+  fits <- ssd_fit_dists(data = data, dists = dist)
+  tidy <- tidy(fits)
+  testthat::expect_s3_class(tidy, "tbl_df")
+  testthat::expect_identical(names(tidy), c("dist", "term", "est", "se"))
+  testthat::expect_identical(tidy$dist[1], dist)
+  tidy$lower <- tidy$est - tidy$se * 3
+  tidy$upper <- tidy$est + tidy$se * 3
 
-    default <- ep(glue::glue("formals(ssd_r{dist})"))
-    default$n <- NULL
-    default$chk <- NULL
-    default <- data.frame(term = names(default), default = unlist(default))
+  default <- ep(glue::glue("formals(ssd_r{dist})"))
+  default$n <- NULL
+  default$chk <- NULL
+  default <- data.frame(term = names(default), default = unlist(default))
 
-    tidy <- merge(tidy, default, by = "term", all = "TRUE")
-    testthat::expect_true(all(tidy$default > tidy$lower - upadj))
-    testthat::expect_true(all(tidy$default < tidy$upper + upadj))
-  }
+  tidy <- merge(tidy, default, by = "term", all = "TRUE")
+  testthat::expect_true(all(tidy$default > tidy$lower - upadj))
+  testthat::expect_true(all(tidy$default < tidy$upper + upadj))
 }
