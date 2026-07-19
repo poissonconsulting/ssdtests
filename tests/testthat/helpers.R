@@ -43,6 +43,11 @@ expect_snapshot_plot <- function(x, name) {
   testthat::expect_snapshot_file(path, paste0(name, ".png"))
 }
 
+# Bootstrap compatibility limits (lcl/ucl/se) depend on refits that diverge
+# across BLAS/LAPACK implementations, so their exact snapshot only holds on the
+# platform that generated it. Tests that snapshot bootstrap CIs must call
+# skip_on_ci() before the bootstrap; this helper still asserts the structural
+# pboot bounds, which hold on every platform. See CONTRIBUTING.md.
 expect_snapshot_boot_data <- function(x, name, digits = 6, min_pboot = 0.9, max_pboot = 1) {
   if (!is.na(min_pboot) && min_pboot > 0) {
     testthat::expect_true(all(x$pboot >= min_pboot))
@@ -56,7 +61,6 @@ expect_snapshot_boot_data <- function(x, name, digits = 6, min_pboot = 0.9, max_
 
 expect_snapshot_data <- function(x, name, digits = 6, delist = FALSE) {
   fun <- function(x) if(is.numeric(x)) signif(x, digits = digits) else x
-  lapply_fun <- function(x) I(lapply(x, fun))
   x <- dplyr::mutate(x, dplyr::across(where(is.numeric), fun))
 
   if(!delist) {
