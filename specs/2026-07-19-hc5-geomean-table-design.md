@@ -55,13 +55,19 @@ The table has 477 rows: 53 datasets by 9 distributions.
 `expect_snapshot_data(tbl, "hc5_gm", digits = 4)` writes `tests/testthat/_snaps/hc5-gm/hc5_gm.csv`.
 Point estimates only (`ci = FALSE`), but each fit is wrapped in `withr::with_seed(50, ...)`: gompertz (and other fragile distributions) use random initialisation, so an unseeded fit is not reproducible run to run.
 Seeding per fit makes the snapshot locally deterministic and is robust to dataset order.
-`digits = 4` keeps the snapshot robust to minor cross-platform maximum-likelihood differences.
+
+`digits = 7` was chosen from a cross-platform measurement (see below): every fitting combination is identical to at least 7 significant figures on macOS, Windows, and Ubuntu, so the table is fully portable at this precision.
 
 ## Platform handling
 
-Run on all CI platforms initially.
-Per-distribution single fits (especially `burrIII3` and the mixtures) are more numerically fragile than the model-averaged bcanz table, so if CI shows cross-platform drift the fallback is `skip_on_ci()` per the CONTRIBUTING.md convention.
-This is not applied initially.
+Runs on all CI platforms.
+The full-precision table was computed on macOS, Windows, and Ubuntu (via a one-off `scripts/compute-hc5-gm.R` plus matrix workflow) and compared cell by cell:
+
+- 338 of the 353 fitting combinations are identical across all platforms to >= 12 significant figures.
+- 15 (all `burrIII3`, `gamma`, `llogis_llogis`, `lnorm_lnorm`) diverge only at 8+ significant figures, agreeing to 7-11 figures; macOS is the odd platform out for 14 of them.
+- macOS CI is bit-identical to a local Apple-Silicon mac, so there is no local-only divergence.
+
+Rounding to 7 significant figures therefore keeps the single table green on every platform, and no `skip_on_ci()` / `skip_on_os()` guard is required.
 
 ## Verification
 

@@ -18,5 +18,8 @@ test_that("per-distribution HC5 as percent of geomean for all curated ssddata da
   })
   hc5 <- dplyr::bind_rows(hc5)
 
-  expect_snapshot_data(hc5, "hc5_gm", digits = 4)
+  # 7 significant figures is reproducible across all CI platforms for every
+  # fitting combination; divergence in the fragile fits (burrIII3, gamma,
+  # mixtures) only appears at 8+ sig figs. See specs design doc.
+  expect_snapshot_data(hc5, "hc5_gm", digits = 7)
 })
