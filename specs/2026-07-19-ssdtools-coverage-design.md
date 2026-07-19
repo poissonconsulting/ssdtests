@@ -2,49 +2,60 @@
 
 ## Purpose
 
-Quantify which ssdtools code paths the ssdtests suite exercises, and in particular the incremental coverage ssdtests adds beyond ssdtools' own test suite.
-This is the metric that justifies the package: right now the `test-coverage` workflow measures ssdtests' own coverage (a few trivial R files), which says nothing about the package's actual job.
+Report the simple line coverage of ssdtools produced by running the ssdtests suite.
+This is the metric that justifies the package: the existing `test-coverage` workflow measures ssdtests' own coverage (a few trivial R files), which says nothing about the package's actual job.
+
+## Source selection: org and branch matched
+
+The ssdtools source is chosen to correspond to the current ssdtests repo and branch:
+
+- **Org** = owner of the ssdtests `origin` remote. In this clone `origin` is `poissonconsulting`; it is `bcgov` for a direct clone of `bcgov/ssdtests`.
+- **Branch** = the current ssdtests branch, mapped to the same-named branch on `{org}/ssdtools`.
+
+So:
+
+- `bcgov/ssdtests@main` -> `bcgov/ssdtools@main`
+- `poissonconsulting/ssdtests@main` -> `poissonconsulting/ssdtools@main`
+- `poissonconsulting/ssdtests@dev` -> `poissonconsulting/ssdtools@dev`
+
+If the same-named branch does not exist on `{org}/ssdtools` (for example a feature branch), fall back to that ssdtools repo's default branch. An explicit `ref` argument overrides the detected branch.
+
+The script shallow-clones `{org}/ssdtools@{ref}` into a temporary directory each run, so the ssdtools version is exactly the corresponding branch regardless of any local checkout state. The temp clone is removed afterwards.
 
 ## Approach
 
-A local R script `scripts/ssdtools-coverage.R` that instruments a local ssdtools source tree with covr and runs the ssdtests suite against it.
+Confirmed mechanism (spiked): `covr::package_coverage(path = <ssdtools source>, type = "none", code = <run ssdtests tests>)` instruments all ssdtools source files (76 in the spike) and attributes coverage from whatever `code` runs. Running the ssdtests suite as that `code` yields ssdtools coverage produced by ssdtests.
 
-Confirmed mechanism (spiked): `covr::package_coverage(path = <ssdtools>, type = "none", code = <run ssdtests tests>)` instruments all ssdtools source files (76 in the spike) and attributes coverage from whatever `code` runs. Running `testthat::test_dir()` on the ssdtests tests as that `code` therefore yields ssdtools coverage produced by ssdtests.
+`scripts/ssdtools-coverage.R`:
 
-The script:
+1. Detects org from `git remote get-url origin`, branch from `git rev-parse --abbrev-ref HEAD` (or the `ref` argument).
+2. Shallow-clones `{org}/ssdtools@{ref}` to a temp dir (falling back to the default branch if `{ref}` is absent).
+3. Builds the set of ssdtests test files to run, excluding the stress test by default (see below), as an anchored inclusion filter for `testthat::test_dir()`.
+4. Runs `covr::package_coverage(clone, type = "none", code = "testthat::test_dir('<ssdtests>/tests/testthat', filter = '<filter>', stop_on_failure = FALSE, reporter = 'silent')")`.
+5. Prints the overall ssdtools coverage percentage and a per-file table (`covr::percent_coverage()` and `covr::tally_coverage()`), then removes the temp clone.
 
-1. Resolves a local ssdtools source path (command-line arg 1, default `~/Code/poissonconsulting/ssdtools`).
-2. Computes ssdtools coverage from ssdtests: `package_coverage(ssdtools, type = "none", code = "testthat::test_dir('<ssdtests>/tests/testthat', stop_on_failure = FALSE, reporter = 'silent')")`.
-3. Computes the baseline ssdtools coverage from ssdtools' own tests: `package_coverage(ssdtools)`.
-4. Reports:
-   - overall ssdtools coverage from ssdtests (percent, and per-file table via `covr::tally_coverage()`),
-   - the incremental lines and files covered by ssdtests but not by ssdtools' own tests (set difference on the covered-line keys of the two coverage objects),
-   - optionally an HTML report via `covr::report()`.
+## Excluding the stress test
 
-## Why local, not CI
+`test-fit-random-small.R` runs 20000 fits; under covr instrumentation that would run for hours while adding no new ssdtools coverage (it only re-hits the lnorm fit path). It is excluded from the coverage run by default. A `--all` flag re-includes it.
 
-The value of ssdtests is concentrated in the slow / `skip_on_ci` tests, which do not run on CI. Run locally, the `CI` environment variable is unset so those tests execute and the measurement reflects the full suite. A CI job would systematically undercount exactly the tests this package exists for, so the primary deliverable is a local script, not a workflow.
+Exclusion is implemented by computing the test basenames, dropping `fit-random-small`, and passing the rest as an anchored alternation `filter` to `test_dir` (for example `^(hc|hc5-gm|lnorm|...)$`), so no test files are copied or modified.
 
-## Runtime
+## Runtime and skips
 
-Instrumented coverage of the full suite is heavy; the `fit-random-small` tests alone run 20000 fits and would be far slower under instrumentation. The script therefore:
-
-- accepts an optional `filter` argument (passed to `test_dir`) to scope the run to specific test files, and
-- by default excludes the pathological stress tests (`fit-random-small`) from the coverage run, documenting that a full run is slow.
-
-The incremental-coverage comparison (step 3-4) requires ssdtools' own test suite to run under instrumentation as well; this is the ssdtools baseline and is expected to be the slower half.
+The suite is run locally, so the `CI` environment variable is unset and the `skip_on_ci` tests execute (they are the bulk of the package's value). Plot snapshot tests still `skip_on_os` on non-macOS. Snapshot mismatches do not stop the run (`stop_on_failure = FALSE`); coverage is collected regardless. Even excluding the stress test, a full run is slow because it instruments ssdtools and runs the curated-dataset table tests; this is expected.
 
 ## Deliverable
 
 - `scripts/ssdtools-coverage.R` (Rbuildignored via the existing `^scripts$` entry).
-- A short "Measuring ssdtools coverage" note in `CONTRIBUTING.md` describing how to run it and interpret the output.
-- No committed coverage numbers; they vary with the ssdtools version and are informational.
+- A short "Measuring ssdtools coverage" note in `CONTRIBUTING.md` describing how to run it, the org/branch matching, and the default stress-test exclusion.
+- No committed coverage numbers; they are informational and vary with the ssdtools branch.
 
 ## Verification
 
-Run `Rscript scripts/ssdtools-coverage.R` against the local ssdtools checkout on a filtered subset (for example `--filter hc5-gm`) and confirm it prints a non-trivial ssdtools coverage percentage plus an incremental report, and completes in reasonable time. A full run (all non-excluded tests) is expected to be slow but should produce the same shape of report.
+On `poissonconsulting/ssdtests@dev`, run `Rscript scripts/ssdtools-coverage.R --filter hc5-gm` and confirm it clones `poissonconsulting/ssdtools@dev`, prints a non-trivial ssdtools coverage percentage and per-file table, and removes the temp clone. A default run (all tests except `fit-random-small`) produces the same report shape over the whole suite.
 
 ## Out of scope
 
-- A CI workflow or Codecov integration (undercounts the skip_on_ci tests; can be revisited if a portable subset is worth tracking).
-- Changing or removing the existing `test-coverage` workflow (separate decision).
+- Incremental coverage over ssdtools' own tests (simple coverage only).
+- A CI workflow or Codecov integration (skip_on_ci tests would be undercounted on CI).
+- Changing or removing the existing `test-coverage` workflow.
