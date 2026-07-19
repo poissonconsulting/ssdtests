@@ -3,7 +3,7 @@ test_that("ssd_fit_dists computable = TRUE allows for fits without standard erro
   data$Other <- data$Conc
   data$Conc <- data$Conc / max(data$Conc)
 
-  skip()
+  skip_on_ci()
   expect_warning(
     ssd_fit_dists(data, right = "Other", rescale = FALSE, at_boundary_ok = FALSE),
     "^Distribution 'lnorm_lnorm' failed to converge \\(try rescaling data\\)"
