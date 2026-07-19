@@ -8,8 +8,7 @@
 ^revdep$
 ^scripts$
 ^specs$
-^codecov\.yml$
-^\.covrignore$
+^CONTRIBUTING\.md$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
 ^LICENSE\.md$
