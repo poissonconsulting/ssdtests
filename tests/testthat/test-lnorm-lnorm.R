@@ -2,20 +2,6 @@ test_that("lnorm_lnorm", {
   test_dist2("lnorm_lnorm", upadj = 1)
 })
 
-test_that("ssd_fit_dists lnorm_lnorm unstable with censored data", {
-  data <- ssddata::ccme_boron
-  data$Other <- data$Conc
-  data$Conc <- data$Conc / max(data$Conc)
-
-  skip()
-  set.seed(102)
-  fits <- ssd_fit_dists(data, right = "Other", dists = c("lnorm_lnorm"))
-
-  tidy <- tidy(fits)
-  expect_s3_class(tidy, "tbl")
-  expect_snapshot_data(tidy, "lnorm_lnorm_no_se", digits = 3)
-})
-
 test_that("lnorm_lnorm fits anonb", {
   skip_on_ci()
 
