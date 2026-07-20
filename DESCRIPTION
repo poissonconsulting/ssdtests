@@ -45,6 +45,8 @@ Suggests:
     tibble,
     tidyr,
     withr
+VignetteBuilder: 
+    knitr
 Remotes:
     open-AIMS/ssddata,
     poissonconsulting/ssdtools

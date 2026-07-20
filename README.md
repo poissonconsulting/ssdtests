@@ -10,8 +10,22 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![R-CMD-check](https://github.com/poissonconsulting/ssdtests/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/poissonconsulting/ssdtests/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of ssdtests is to test the
-[ssdtools](https://github.com/bcgov/ssdtools) package.
+The goal of ssdtests is to hold the slow and unstable tests for the
+[ssdtools](https://github.com/bcgov/ssdtools) package. It has no
+user-facing functionality of its own.
+
+A test belongs here rather than in ssdtools when it cannot run reliably
+or quickly as part of ssdtools’ own CRAN-facing suite: exact parametric
+bootstrap confidence-limit snapshots that are not reproducible across
+platforms, slow tests such as fitting every curated dataset to every
+distribution, and numerically unstable fits. ssdtools keeps the fast,
+portable, structural assertions for the same code paths.
+
+The tests are organised by subject in `tests/testthat/` (one
+`test-<subject>.R` file per distribution or function), and
+`scripts/ssdtools-coverage.R` reports the ssdtools coverage the suite
+produces. See `vignette("ssdtests")` for an overview and
+`CONTRIBUTING.md` for the conventions.
 
 ## Installation
 
@@ -20,7 +34,7 @@ You can install the development version of ssdtests from
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("poissonconsulting/ssdtests")
+pak::pak("bcgov/ssdtests")
 ```
 
 ## Licensing
