@@ -48,3 +48,22 @@ machine that generated them.
 
 Run the tests, review changes with `testthat::snapshot_review()`, and accept
 with `testthat::snapshot_accept()` once verified.
+
+## Measuring ssdtools coverage
+
+`scripts/ssdtools-coverage.R` reports the ssdtools line coverage produced by the
+ssdtests suite. It clones the ssdtools branch that corresponds to the current
+ssdtests repo and branch (same org as the `origin` remote, same branch name, so
+`poissonconsulting/ssdtests@dev` is measured against `poissonconsulting/ssdtools@dev`),
+instruments it with covr, runs the ssdtests tests against it, and prints the
+overall and per-file coverage.
+
+```sh
+Rscript scripts/ssdtools-coverage.R
+```
+
+Run it locally, not on CI: the `skip_on_ci()` tests are where most of the
+coverage comes from and they only run locally. `test-fit-random-small.R` is
+excluded by default (20000 instrumented fits take hours and add no new
+coverage); pass `--all` to include it, `--filter <regex>` to scope to specific
+test files, or `--ref <branch>` to measure against a different ssdtools branch.
