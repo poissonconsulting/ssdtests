@@ -3,8 +3,8 @@
 # The ssdtools source is matched to the current ssdtests repo and branch: the
 # org is the owner of the `origin` remote and the branch is the same-named
 # branch on {org}/ssdtools (falling back to that repo's default branch). So
-# poissonconsulting/ssdtests@dev is measured against poissonconsulting/ssdtools@dev,
-# bcgov/ssdtests@main against bcgov/ssdtools@main, and so on.
+# bcgov/ssdtests@main is measured against bcgov/ssdtools@main,
+# poissonconsulting/ssdtests@dev against poissonconsulting/ssdtools@dev, and so on.
 #
 # Usage:
 #   Rscript scripts/ssdtools-coverage.R [--ref <branch>] [--filter <regex>] [--all]

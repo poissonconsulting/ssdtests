@@ -21,9 +21,8 @@ Authors@R: c(
   )
 Description: Slow and unstable tests for ssdtools package.
 License: Apache License (== 2.0) | file LICENSE
-URL: https://github.com/poissonconsulting/ssdtests,
-    https://poissonconsulting.github.io/ssdtests/
-BugReports: https://github.com/poissonconsulting/ssdtests/issues
+URL: https://github.com/bcgov/ssdtests, https://bcgov.github.io/ssdtests/
+BugReports: https://github.com/bcgov/ssdtests/issues
 Depends: 
     R (>= 4.1),
     ssdtools (>= 2.6.0)
@@ -48,8 +47,8 @@ Suggests:
 VignetteBuilder: 
     knitr
 Remotes:
-    open-AIMS/ssddata,
-    poissonconsulting/ssdtools
+    bcgov/ssdtools,
+    open-AIMS/ssddata
 Config/Needs/website: poissonconsulting/poissontemplate, rmarkdown
 Config/roxygen2/version: 8.0.0.9000
 Config/testthat/edition: 3

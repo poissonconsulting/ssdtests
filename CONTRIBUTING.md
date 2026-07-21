@@ -54,7 +54,9 @@ with `testthat::snapshot_accept()` once verified.
 `scripts/ssdtools-coverage.R` reports the ssdtools line coverage produced by the
 ssdtests suite. It clones the ssdtools branch that corresponds to the current
 ssdtests repo and branch (same org as the `origin` remote, same branch name, so
-`poissonconsulting/ssdtests@dev` is measured against `poissonconsulting/ssdtools@dev`),
+`bcgov/ssdtests@main` is measured against `bcgov/ssdtools@main` and the
+development fork `poissonconsulting/ssdtests@dev` against
+`poissonconsulting/ssdtools@dev`),
 instruments it with covr, runs the ssdtests tests against it, and prints the
 overall and per-file coverage.
 

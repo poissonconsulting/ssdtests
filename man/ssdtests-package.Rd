@@ -11,9 +11,9 @@ Slow and unstable tests for ssdtools package.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/poissonconsulting/ssdtests}
-  \item \url{https://poissonconsulting.github.io/ssdtests/}
-  \item Report bugs at \url{https://github.com/poissonconsulting/ssdtests/issues}
+  \item \url{https://github.com/bcgov/ssdtests}
+  \item \url{https://bcgov.github.io/ssdtests/}
+  \item Report bugs at \url{https://github.com/bcgov/ssdtests/issues}
 }
 
 }
