@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="index.html">ssdtests</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,6 +35,7 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="articles/ssdtests.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
@@ -55,14 +56,16 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>The goal of ssdtests is to test the <a href="https://github.com/bcgov/ssdtools" class="external-link">ssdtools</a> package.</p>
+<p>The goal of ssdtests is to hold the slow and unstable tests for the <a href="https://github.com/bcgov/ssdtools" class="external-link">ssdtools</a> package. It has no user-facing functionality of its own.</p>
+<p>A test belongs here rather than in ssdtools when it cannot run reliably or quickly as part of ssdtools’ own CRAN-facing suite: exact parametric bootstrap confidence-limit snapshots that are not reproducible across platforms, slow tests such as fitting every curated dataset to every distribution, and numerically unstable fits. ssdtools keeps the fast, portable, structural assertions for the same code paths.</p>
+<p>The tests are organised by subject in <code>tests/testthat/</code> (one <code>test-&lt;subject&gt;.R</code> file per distribution or function), and <code>scripts/ssdtools-coverage.R</code> reports the ssdtools coverage the suite produces. See <code><a href="articles/ssdtests.html">vignette("ssdtests")</a></code> for an overview and <code>CONTRIBUTING.md</code> for the conventions.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>You can install the development version of ssdtests from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"poissonconsulting/ssdtests"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"bcgov/ssdtests"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="licensing">Licensing<a class="anchor" aria-label="anchor" href="#licensing"></a>
