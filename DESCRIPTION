@@ -19,7 +19,7 @@ Authors@R: c(
     person("Environment and Climate Change Canada", role = c("fnd", "cph")),
     person("Australian Government Department of Climate Change, Energy, the Environment and Water", role = c("fnd", "cph"))
   )
-Description: Slow and unstable tests for ssdtools package.
+Description: Slow and unstable tests for the ssdtools package.
 License: Apache License (== 2.0) | file LICENSE
 URL: https://github.com/bcgov/ssdtests, https://bcgov.github.io/ssdtests/
 BugReports: https://github.com/bcgov/ssdtests/issues
