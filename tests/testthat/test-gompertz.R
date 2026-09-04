@@ -11,8 +11,13 @@ test_that("bootstrap gompertz with problem data", {
 
   skip_on_ci()
   withr::with_seed(99, {
-    hc <- ssd_hc(fit,
-      ci = TRUE, nboot = 100, min_pboot = 0.8, ci_method = "MACL", est_method = "arithmetic",
+    hc <- ssd_hc(
+      fit,
+      ci = TRUE,
+      nboot = 100,
+      min_pboot = 0.8,
+      ci_method = "MACL",
+      est_method = "arithmetic",
       samples = TRUE
     )
   })
@@ -21,6 +26,7 @@ test_that("bootstrap gompertz with problem data", {
 
 test_that("sgompertz completely unstable!", {
   skip_on_ci() # as incredibly unstable
+  # fmt: skip
   x <- c(
     3.15284072848962, 1.77947821504531, 0.507778085984185, 1.650387414067,
     1.00725113964435, 7.04244885481452, 1.32336941144339, 1.51533791792454
@@ -39,6 +45,7 @@ test_that("sgompertz completely unstable!", {
 
 test_that("sgompertz with initial values still unstable!", {
   skip_on_ci() # as incredibly unstable
+  # fmt: skip
   x <- c(
     3.15284072848962, 1.77947821504531, 0.507778085984185, 1.650387414067,
     1.00725113964435, 7.04244885481452, 1.32336941144339, 1.51533791792454
@@ -98,6 +105,7 @@ test_that("sgompertz cant even fit some values", {
 
 test_that("sgompertz cant even initialize lots of values", {
   skip_on_ci()
+  # fmt: skip
   x <- c(
     38.696580321462, 41.0167488906729, 39.5529154651536, 40.1225506655899,
     38.2675196410126, 35.2169221089071, 37.8367285461107, 40.1377838232664,

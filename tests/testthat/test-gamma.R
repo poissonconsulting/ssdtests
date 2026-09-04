@@ -9,7 +9,13 @@ test_that("gamma parameters are extremely unstable", {
 
   # gamma shape change from 913 to 868 on most recent version
   withr::with_seed(102, {
-    fits <- ssd_fit_dists(data, dists = c("lnorm", "gamma"), right = "Other", rescale = FALSE, computable = FALSE)
+    fits <- ssd_fit_dists(
+      data,
+      dists = c("lnorm", "gamma"),
+      right = "Other",
+      rescale = FALSE,
+      computable = FALSE
+    )
   })
 
   tidy <- tidy(fits)

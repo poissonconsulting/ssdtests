@@ -49,6 +49,13 @@ machine that generated them.
 Run the tests, review changes with `testthat::snapshot_review()`, and accept
 with `testthat::snapshot_accept()` once verified.
 
+## Formatting
+
+Code is formatted with [Air](https://posit-dev.github.io/air/).
+Run `air format .` before committing, or enable format-on-save in your editor.
+Long literal data vectors in the tests are preceded by `# fmt: skip` so they
+stay compact; add the same marker when pasting a new one.
+
 ## Measuring ssdtools coverage
 
 `scripts/ssdtools-coverage.R` reports the ssdtools line coverage produced by the

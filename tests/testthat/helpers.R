@@ -14,7 +14,10 @@
 
 local_multisession <- function(.local_envir = parent.frame(), workers = 2) {
   oldDoPar <- doFuture::registerDoFuture()
-  withr::defer_parent(with(oldDoPar, foreach::setDoPar(fun = fun, data = data, info = info)))
+  withr::defer_parent(with(
+    oldDoPar,
+    foreach::setDoPar(fun = fun, data = data, info = info)
+  ))
   oldPlan <- future::plan("future::multisession", workers = workers)
   withr::defer_parent(future::plan(oldPlan))
   invisible(oldDoPar)
@@ -48,7 +51,13 @@ expect_snapshot_plot <- function(x, name) {
 # platform that generated it. Tests that snapshot bootstrap CIs must call
 # skip_on_ci() before the bootstrap; this helper still asserts the structural
 # pboot bounds, which hold on every platform. See CONTRIBUTING.md.
-expect_snapshot_boot_data <- function(x, name, digits = 6, min_pboot = 0.9, max_pboot = 1) {
+expect_snapshot_boot_data <- function(
+  x,
+  name,
+  digits = 6,
+  min_pboot = 0.9,
+  max_pboot = 1
+) {
   if (!is.na(min_pboot) && min_pboot > 0) {
     testthat::expect_gte(min(x$pboot), min_pboot)
   }
@@ -68,7 +77,10 @@ expect_snapshot_data <- function(x, name, digits = 6, delist = FALSE) {
     x <- dplyr::mutate(x, dplyr::across(dplyr::where(is.list), lapply_fun))
   } else {
     n <- nrow(x)
-    x <- dplyr::mutate(x, dplyr::across(dplyr::where(is.list), \(.x) rep("list", n)))
+    x <- dplyr::mutate(
+      x,
+      dplyr::across(dplyr::where(is.list), \(.x) rep("list", n))
+    )
   }
   path <- save_csv(x)
   testthat::expect_snapshot_file(

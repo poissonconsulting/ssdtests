@@ -5,11 +5,22 @@ test_that("ssd_fit_dists computable = TRUE allows for fits without standard erro
 
   skip_on_ci()
   expect_snapshot({
-    fits <- ssd_fit_dists(data, right = "Other", rescale = FALSE, at_boundary_ok = FALSE)
+    fits <- ssd_fit_dists(
+      data,
+      right = "Other",
+      rescale = FALSE,
+      at_boundary_ok = FALSE
+    )
   })
 
   withr::with_seed(50, {
-    fits <- ssd_fit_dists(data, right = "Other", dists = c("lgumbel", "llogis", "lnorm"), rescale = FALSE, at_boundary_ok = TRUE)
+    fits <- ssd_fit_dists(
+      data,
+      right = "Other",
+      dists = c("lgumbel", "llogis", "lnorm"),
+      rescale = FALSE,
+      at_boundary_ok = TRUE
+    )
   })
 
   tidy <- tidy(fits)

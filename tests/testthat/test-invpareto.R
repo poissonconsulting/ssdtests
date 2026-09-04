@@ -5,6 +5,7 @@ test_that("invpareto", {
 test_that("invpareto with extreme data", {
   skip_on_ci()
 
+  # fmt: skip
   data <- data.frame(Conc = c(
     2.48892649039671, 2.5258371156749, 2.51281264491458,
     2.49866046657748, 2.56572740160664, 2.49440006912093, 2.4817062813665,
@@ -37,6 +38,10 @@ test_that("invpareto with extreme data", {
 
   expect_equal(
     estimates(fit99),
-    list(invpareto.weight = 1, invpareto.scale = 2.61422138795731, invpareto.shape = 26.0278618888663)
+    list(
+      invpareto.weight = 1,
+      invpareto.scale = 2.61422138795731,
+      invpareto.shape = 26.0278618888663
+    )
   )
 })
