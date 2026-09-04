@@ -13,7 +13,7 @@ anzg_ametryn_fresh,0.062114,0.0702205
 anzg_ammonia_fresh,0.969684,0.96594
 anzg_bisphenol_a_fresh,5.50305,5.83917
 anzg_bisphenol_a_marine,0.448909,0.595738
-anzg_boron_fresh,1.13455,1.12824
+anzg_boron_fresh,1134.55,1128.24
 anzg_chlorine_marine,15.4474,15.4284
 anzg_chromium_III_fresh,6.7311,6.79146
 anzg_copper_marine,0.491179,0.48897
@@ -31,9 +31,9 @@ anzg_mcpa_fresh,5.41996,5.67831
 anzg_metolachlor_fresh,0.654764,0.719745
 anzg_metsulfuron_methyl_fresh,0.004774,0.00972239
 anzg_nickel_marine,5.9115,5.88105
-anzg_nitrate_hard_fresh,22.5255,23.5917
-anzg_nitrate_moderate_fresh,4.66404,4.61549
-anzg_nitrate_soft_fresh,0.916099,0.935624
+anzg_nitrate_hard_fresh,21422.3,21358.4
+anzg_nitrate_moderate_fresh,4664.04,4615.49
+anzg_nitrate_soft_fresh,916.098,935.62
 anzg_paraquat_fresh,0.985412,0.988606
 anzg_perfluorooctane_sulfonate_pfos_fresh,0.883378,1.04172
 anzg_picloram_fresh,112.399,110.576
