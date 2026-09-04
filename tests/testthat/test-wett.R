@@ -51,7 +51,7 @@ test_that("odds scaling changes hc", {
   gp <- datas |>
     dplyr::mutate(
       odds = dplyr::if_else(odds, "odds", "original"),
-      complement = dplyr::if_else(complement, "uppper tail", "lower tail")
+      complement = dplyr::if_else(complement, "upper tail", "lower tail")
     ) |>
     tidyr::pivot_wider(names_from = odds, values_from = est) |>
     dplyr::mutate(bias = ((1 / odds) / (1 / original)) - 1) |>
@@ -63,8 +63,7 @@ test_that("odds scaling changes hc", {
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::scale_x_log10() +
     ggplot2::xlab("Number of estimated dilutions") +
-    ggplot2::ylab("Porportion of additional required dilutions")
-  NULL
+    ggplot2::ylab("Proportion of additional required dilutions")
 
   expect_snapshot_plot(gp, "wett")
 })

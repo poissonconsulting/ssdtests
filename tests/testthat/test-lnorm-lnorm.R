@@ -5,12 +5,13 @@ test_that("lnorm_lnorm", {
 test_that("lnorm_lnorm fits anonb", {
   skip_on_ci()
 
-  set.seed(99)
   data <- ssddata::anon_b
-  fit <- ssd_fit_dists(data,
-    dists = c("lnorm_lnorm"),
-    at_boundary_ok = FALSE, min_pmix = 0.05
-  )
+  withr::with_seed(99, {
+    fit <- ssd_fit_dists(data,
+      dists = c("lnorm_lnorm"),
+      at_boundary_ok = FALSE, min_pmix = 0.05
+    )
+  })
 
   tidy <- tidy(fit)
   expect_snapshot_data(tidy, "tidy_anonb")
@@ -273,7 +274,6 @@ test_that("lnorm_lnorm non-bimodal 1000 data", {
     11.4705435703147, 11.716935272144, 10.9954029806633, 11.1256601239288
   ))
   expect_snapshot(
-    ssd_fit_dists(data = data, dists = "lnorm_lnorm", at_boundary_ok = TRUE),
-    error = TRUE
+    ssd_fit_dists(data = data, dists = "lnorm_lnorm", at_boundary_ok = TRUE)
   )
 })

@@ -8,8 +8,9 @@ test_that("gamma parameters are extremely unstable", {
   data$Conc <- data$Conc / max(data$Conc)
 
   # gamma shape change from 913 to 868 on most recent version
-  set.seed(102)
-  fits <- ssd_fit_dists(data, dists = c("lnorm", "gamma"), right = "Other", rescale = FALSE, computable = FALSE)
+  withr::with_seed(102, {
+    fits <- ssd_fit_dists(data, dists = c("lnorm", "gamma"), right = "Other", rescale = FALSE, computable = FALSE)
+  })
 
   tidy <- tidy(fits)
   expect_s3_class(tidy, "tbl")
