@@ -6,12 +6,19 @@ test_that("per-distribution HC5 as percent of geomean for all curated ssddata da
     data <- datasets[[name]]
     # Seed the fit: gompertz (and other fragile distributions) use random
     # initialisation, so an unseeded fit is not reproducible run to run.
-    fit <- withr::with_seed(50, ssd_fit_dists(data, dists = dists, silent = TRUE))
+    fit <- withr::with_seed(
+      50,
+      ssd_fit_dists(data, dists = dists, silent = TRUE)
+    )
     hc <- ssd_hc(fit, proportion = 0.05, average = FALSE)
     gm <- ssddata::gm_mean(data$Conc)
 
     grid <- tibble::tibble(dataset = name, dist = dists)
-    grid <- dplyr::left_join(grid, dplyr::select(hc, dist, hc5 = est), by = "dist")
+    grid <- dplyr::left_join(
+      grid,
+      dplyr::select(hc, dist, hc5 = est),
+      by = "dist"
+    )
     grid$gm <- gm
     grid$hc5_pct_gm <- grid$hc5 / gm * 100
     grid

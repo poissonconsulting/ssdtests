@@ -7,9 +7,11 @@ test_that("lnorm_lnorm fits anonb", {
 
   data <- ssddata::anon_b
   withr::with_seed(99, {
-    fit <- ssd_fit_dists(data,
+    fit <- ssd_fit_dists(
+      data,
       dists = c("lnorm_lnorm"),
-      at_boundary_ok = FALSE, min_pmix = 0.05
+      at_boundary_ok = FALSE,
+      min_pmix = 0.05
     )
   })
 
@@ -21,6 +23,7 @@ test_that("lnorm_lnorm fits anonb", {
 test_that("lnorm_lnorm non-bimodal 1000 data", {
   skip_on_ci()
 
+  # fmt: skip
   data <- data.frame(Conc = c(
     11.6635934627129, 11.3655834538171, 11.8239438136152, 11.4457330597547,
     11.2733838979158, 11.6555694734405, 11.6077458629663, 11.6253179146231,

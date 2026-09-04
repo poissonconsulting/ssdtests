@@ -9,7 +9,10 @@ test_that("weibull sometimes fails to converge", {
   skip_on_ci()
   withr::with_seed(97, {
     expect_warning(
-      fits <- ssdtools::ssd_fit_dists(data = data, dists = c("lnorm", "weibull")),
+      fits <- ssdtools::ssd_fit_dists(
+        data = data,
+        dists = c("lnorm", "weibull")
+      ),
       "Distribution 'weibull' failed to converge \\(try rescaling data\\): ERROR: ABNORMAL_TERMINATION_IN_LNSRCH."
     )
   })
@@ -30,6 +33,7 @@ test_that("weibull bootstraps anona", {
 })
 
 test_that("weibull is sometimes unstable", {
+  # fmt: skip
   data <- data.frame(Conc = c(
     868.24508,
     1713.82388,
@@ -51,9 +55,15 @@ test_that("weibull is sometimes unstable", {
 
   fits <- ssd_fit_dists(
     data = data,
-    left = "Conc", dists = c("gamma", "weibull"),
-    silent = TRUE, reweight = FALSE, min_pmix = 0, nrow = 6L,
-    computable = TRUE, at_boundary_ok = FALSE, rescale = FALSE
+    left = "Conc",
+    dists = c("gamma", "weibull"),
+    silent = TRUE,
+    reweight = FALSE,
+    min_pmix = 0,
+    nrow = 6L,
+    computable = TRUE,
+    at_boundary_ok = FALSE,
+    rescale = FALSE
   )
 
   # not sure why weibull dropping on some linux on github actions and windows

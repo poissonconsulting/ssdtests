@@ -16,3 +16,5 @@
 ^README\.Rmd$
 ^vignettestatic$
 ^vignettes/articles$
+^[.]?air[.]toml$
+^\.vscode$

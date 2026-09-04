@@ -46,8 +46,20 @@ if (!is.null(ref_override)) {
     ref <- branch
   } else {
     symref <- git("ls-remote", "--symref", url, "HEAD")
-    ref <- sub("^ref: refs/heads/(\\S+)\\s+HEAD$", "\\1", symref[grepl("^ref:", symref)])
-    message("Branch '", branch, "' not on ", org, "/ssdtools; using default '", ref, "'.")
+    ref <- sub(
+      "^ref: refs/heads/(\\S+)\\s+HEAD$",
+      "\\1",
+      symref[grepl("^ref:", symref)]
+    )
+    message(
+      "Branch '",
+      branch,
+      "' not on ",
+      org,
+      "/ssdtools; using default '",
+      ref,
+      "'."
+    )
   }
 }
 
@@ -55,8 +67,14 @@ if (!is.null(ref_override)) {
 if (!is.null(filter_override)) {
   filter <- filter_override
 } else {
-  names <- sub("^test-(.*)\\.R$", "\\1", list.files(tests_dir, pattern = "^test-.*\\.R$"))
-  if (!include_all) names <- setdiff(names, "fit-random-small")
+  names <- sub(
+    "^test-(.*)\\.R$",
+    "\\1",
+    list.files(tests_dir, pattern = "^test-.*\\.R$")
+  )
+  if (!include_all) {
+    names <- setdiff(names, "fit-random-small")
+  }
   filter <- paste0("^(", paste(names, collapse = "|"), ")$")
 }
 
@@ -64,14 +82,24 @@ if (!is.null(filter_override)) {
 clone <- tempfile("ssdtools-")
 on.exit(unlink(clone, recursive = TRUE), add = TRUE)
 message("Cloning ", org, "/ssdtools@", ref, " ...")
-status <- system2("git", c("clone", "--depth", "1", "--branch", ref, url, clone))
-if (status != 0) stop("Failed to clone ", url, " at ", ref)
+status <- system2(
+  "git",
+  c("clone", "--depth", "1", "--branch", ref, url, clone)
+)
+if (status != 0) {
+  stop("Failed to clone ", url, " at ", ref)
+}
 
 # --- instrument ssdtools and run the ssdtests suite against it --------------
-message("Instrumenting ssdtools and running ssdtests (filter: ", filter, ") ...")
+message(
+  "Instrumenting ssdtools and running ssdtests (filter: ",
+  filter,
+  ") ..."
+)
 code <- sprintf(
   'testthat::test_local("%s", filter = "%s", stop_on_failure = FALSE, reporter = "silent")',
-  ssdtests_root, filter
+  ssdtests_root,
+  filter
 )
 cov <- covr::package_coverage(path = clone, type = "none", code = code)
 
@@ -86,7 +114,11 @@ per_file <- sort(vapply(
 cat("\n", strrep("=", 60), "\n", sep = "")
 cat(sprintf("ssdtools coverage from ssdtests (%s/ssdtools@%s)\n", org, ref))
 cat(strrep("=", 60), "\n", sep = "")
-cat(sprintf("Overall: %.2f%%  (%d of %d lines)\n\n",
-            covr::percent_coverage(cov), sum(tc$value > 0), nrow(tc)))
+cat(sprintf(
+  "Overall: %.2f%%  (%d of %d lines)\n\n",
+  covr::percent_coverage(cov),
+  sum(tc$value > 0),
+  nrow(tc)
+))
 cat("Per file (%):\n")
 print(data.frame(coverage = per_file))
