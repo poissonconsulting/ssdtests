@@ -41,8 +41,14 @@ expensive, platform-dependent comparison runs only locally.
 `expect_snapshot_boot_data()` still asserts the structural `pboot` bounds.
 
 Snapshots are generated locally (macOS).
-Because most bootstrap tests are `skip_on_ci()`, they compare only on the
-machine that generated them.
+The regular R-CMD-check workflow honours `skip_on_ci()`, so it never compares
+these snapshots.
+The `full-tests` workflow (`.github/workflows/full-tests.yaml`) runs the whole
+suite on a macOS runner with the `CI` variable set to `false` so the skips are
+disabled, weekly and on demand via workflow dispatch.
+It uploads any `.new` snapshot files as an artifact when a comparison fails.
+`test-fit-random-small.R` is excluded from that run because its 20000 fits
+take hours and add no snapshot coverage.
 
 ## Regenerating snapshots
 
