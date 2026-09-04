@@ -142,14 +142,16 @@ test_that("ssd_hp fix_weight", {
 
 test_that("hp multi_ci lnorm default 100", {
   fits <- ssd_fit_dists(ssddata::ccme_boron)
-  set.seed(102)
-  hp_average <- ssd_hp(fits, proportion = TRUE, average = TRUE, ci = TRUE, nboot = 100, ci_method = "MACL", samples = TRUE)
-  set.seed(102)
-  hp_multi <- ssd_hp(fits,
-    proportion = TRUE,
-    average = TRUE, ci_method = "multi_free", ci = TRUE, nboot = 100,
-    min_pboot = 0.8, samples = TRUE
-  )
+  withr::with_seed(102, {
+    hp_average <- ssd_hp(fits, proportion = TRUE, average = TRUE, ci = TRUE, nboot = 100, ci_method = "MACL", samples = TRUE)
+  })
+  withr::with_seed(102, {
+    hp_multi <- ssd_hp(fits,
+      proportion = TRUE,
+      average = TRUE, ci_method = "multi_free", ci = TRUE, nboot = 100,
+      min_pboot = 0.8, samples = TRUE
+    )
+  })
 
   testthat::expect_snapshot({
     hp_average
@@ -171,15 +173,16 @@ test_that("hp multi_ci lnorm default 100", {
 test_that("ssd_hp cis with error", {
   skip_on_ci()
 
-  set.seed(99)
-  conc <- ssd_rlnorm_lnorm(30, meanlog1 = 0, meanlog2 = 1, sdlog1 = 1 / 10, sdlog2 = 1 / 10, pmix = 0.2)
-  data <- data.frame(Conc = conc)
-  fit <- ssd_fit_dists(data, dists = "lnorm_lnorm", min_pmix = 0.1)
-  expect_identical(attr(fit, "min_pmix"), 0.1)
-  expect_warning(hp_err <- ssd_hp(fit, proportion = TRUE, conc = 1, ci = TRUE, ci_method = "multi_fixed", nboot = 100, min_pboot = 0.99))
-  expect_s3_class(hp_err, "tbl")
-  expect_snapshot_data(hp_err, "hp_err_na")
-  hp_err <- ssd_hp(fit, proportion = TRUE, conc = 1, ci = TRUE, nboot = 100, min_pboot = 0.92, ci_method = "MACL")
+  withr::with_seed(99, {
+    conc <- ssd_rlnorm_lnorm(30, meanlog1 = 0, meanlog2 = 1, sdlog1 = 1 / 10, sdlog2 = 1 / 10, pmix = 0.2)
+    data <- data.frame(Conc = conc)
+    fit <- ssd_fit_dists(data, dists = "lnorm_lnorm", min_pmix = 0.1)
+    expect_identical(attr(fit, "min_pmix"), 0.1)
+    expect_warning(hp_err_na <- ssd_hp(fit, proportion = TRUE, conc = 1, ci = TRUE, ci_method = "multi_fixed", nboot = 100, min_pboot = 0.99))
+    hp_err <- ssd_hp(fit, proportion = TRUE, conc = 1, ci = TRUE, nboot = 100, min_pboot = 0.92, ci_method = "MACL")
+  })
+  expect_s3_class(hp_err_na, "tbl")
+  expect_snapshot_data(hp_err_na, "hp_err_na")
   expect_s3_class(hp_err, "tbl")
   expect_snapshot_data(hp_err, "hp_err")
 })
@@ -187,13 +190,16 @@ test_that("ssd_hp cis with error", {
 test_that("ssd_hp comparable parametric and non-parametric big sample size", {
   skip_on_ci()
 
-  set.seed(99)
-  data <- data.frame(Conc = ssd_rlnorm(10000, 2, 1))
-  fit <- ssd_fit_dists(data, dists = "lnorm")
-  set.seed(10)
-  hp_para <- ssd_hp(fit, 1, proportion = TRUE, ci = TRUE, nboot = 10, ci_method = "MACL", samples = TRUE)
+  withr::with_seed(99, {
+    data <- data.frame(Conc = ssd_rlnorm(10000, 2, 1))
+    fit <- ssd_fit_dists(data, dists = "lnorm")
+  })
+  withr::with_seed(10, {
+    hp_para <- ssd_hp(fit, 1, proportion = TRUE, ci = TRUE, nboot = 10, ci_method = "MACL", samples = TRUE)
+  })
   expect_snapshot_data(hp_para, "hp_para")
-  set.seed(10)
-  hp_nonpara <- ssd_hp(fit, 1, proportion = TRUE, ci = TRUE, nboot = 10, parametric = FALSE, ci_method = "MACL", samples = TRUE)
+  withr::with_seed(10, {
+    hp_nonpara <- ssd_hp(fit, 1, proportion = TRUE, ci = TRUE, nboot = 10, parametric = FALSE, ci_method = "MACL", samples = TRUE)
+  })
   expect_snapshot_data(hp_nonpara, "hp_nonpara")
 })

@@ -6,7 +6,7 @@
 \alias{ssdtests-package}
 \title{ssdtests: Tests for ssdtools}
 \description{
-Slow and unstable tests for ssdtools package.
+Slow and unstable tests for the ssdtools package.
 }
 \seealso{
 Useful links:

@@ -11,7 +11,7 @@ of ssdtools' own CRAN-facing test suite. In practice that means:
 
 - Exact snapshots of parametric bootstrap confidence limits, whose values are
 not reproducible across BLAS/LAPACK implementations, so exact comparison only
-holds in a controlled environment (see `test-invpareto_eur.R`).
+holds in a controlled environment (see `test-hc.R`).
 - Slow tests that would make ssdtools' suite too heavy for CRAN, such as fitting
 every curated dataset to every distribution, or looping thousands of small-sample
 fits.

@@ -4,16 +4,18 @@ test_that("gompertz", {
 })
 
 test_that("bootstrap gompertz with problem data", {
-  set.seed(99)
-  data <- data.frame(Conc = ssd_rgompertz(6, location = 0.6, shape = 0.07))
+  withr::with_seed(99, {
+    data <- data.frame(Conc = ssd_rgompertz(6, location = 0.6, shape = 0.07))
+    fit <- ssdtools::ssd_fit_dists(data, dists = "gompertz")
+  })
 
   skip_on_ci()
-  fit <- ssdtools::ssd_fit_dists(data, dists = "gompertz")
-  set.seed(99)
-  hc <- ssd_hc(fit,
-    ci = TRUE, nboot = 100, min_pboot = 0.8, ci_method = "MACL", est_method = "arithmetic",
-    samples = TRUE
-  )
+  withr::with_seed(99, {
+    hc <- ssd_hc(fit,
+      ci = TRUE, nboot = 100, min_pboot = 0.8, ci_method = "MACL", est_method = "arithmetic",
+      samples = TRUE
+    )
+  })
   expect_snapshot_data(hc, "hc_prob")
 })
 
@@ -30,8 +32,9 @@ test_that("sgompertz completely unstable!", {
     set.seed(99)
     ssdtools:::sgompertz(data)
   })
-  set.seed(100)
-  expect_error(ssdtools:::sgompertz(data))
+  withr::with_seed(100, {
+    expect_snapshot(ssdtools:::sgompertz(data), error = TRUE)
+  })
 })
 
 test_that("sgompertz with initial values still unstable!", {
@@ -41,18 +44,23 @@ test_that("sgompertz with initial values still unstable!", {
     1.00725113964435, 7.04244885481452, 1.32336941144339, 1.51533791792454
   )
   data <- data.frame(Conc = x)
-  set.seed(11)
-  expect_error(expect_warning(
-    fit <- ssd_fit_dists(data, dists = "gompertz"),
-    "Some elements in the working weights variable 'wz' are not finite"
-  ))
-  set.seed(21)
-  expect_error(expect_warning(
-    fit <- ssd_fit_dists(data, dists = "gompertz"),
-    "L-BFGS-B needs finite values of 'fn'"
-  ))
-  set.seed(10)
-  fit <- ssd_fit_dists(data, dists = "gompertz")
+  # These fits emit a VGAM warning and then fail; the exact error text drifts
+  # run to run, so assert the stable warning message rather than snapshotting.
+  withr::with_seed(11, {
+    expect_error(expect_warning(
+      ssd_fit_dists(data, dists = "gompertz"),
+      "Some elements in the working weights variable 'wz' are not finite"
+    ))
+  })
+  withr::with_seed(21, {
+    expect_error(expect_warning(
+      ssd_fit_dists(data, dists = "gompertz"),
+      "L-BFGS-B needs finite values of 'fn'"
+    ))
+  })
+  withr::with_seed(10, {
+    fit <- ssd_fit_dists(data, dists = "gompertz")
+  })
 
   sdata <- data.frame(left = x, right = x, weight = 1)
   pars <- estimates(fit$gompertz)
@@ -69,8 +77,9 @@ test_that("sgompertz with initial values still unstable!", {
     set.seed(100)
     ssdtools:::sgompertz(sdata, pars)
   })
-  set.seed(100)
-  expect_error(ssdtools:::sgompertz(sdata))
+  withr::with_seed(100, {
+    expect_snapshot(ssdtools:::sgompertz(sdata), error = TRUE)
+  })
 })
 
 test_that("sgompertz cant even fit some values", {

@@ -19,27 +19,24 @@ Authors@R: c(
     person("Environment and Climate Change Canada", role = c("fnd", "cph")),
     person("Australian Government Department of Climate Change, Energy, the Environment and Water", role = c("fnd", "cph"))
   )
-Description: Slow and unstable tests for ssdtools package.
+Description: Slow and unstable tests for the ssdtools package.
 License: Apache License (== 2.0) | file LICENSE
 URL: https://github.com/bcgov/ssdtests, https://bcgov.github.io/ssdtests/
 BugReports: https://github.com/bcgov/ssdtests/issues
 Depends: 
     R (>= 4.1),
     ssdtools (>= 2.6.0)
-Imports:
-    chk,
-    ssddata (>= 1.0.0)
 Suggests:
     doFuture,
     dplyr,
     foreach,
     future,
     ggplot2,
-    glue,
     knitr,
     purrr,
     readr,
     rmarkdown,
+    ssddata (>= 1.0.0),
     testthat (>= 3.0.0),
     tibble,
     tidyr,
@@ -50,7 +47,7 @@ Remotes:
     bcgov/ssdtools,
     open-AIMS/ssddata
 Config/Needs/website: poissonconsulting/poissontemplate, rmarkdown
-Config/roxygen2/version: 8.0.0.9000
+Config/roxygen2/version: 8.1.0.9000
 Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US

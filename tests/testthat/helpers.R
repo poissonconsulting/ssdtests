@@ -50,41 +50,38 @@ expect_snapshot_plot <- function(x, name) {
 # pboot bounds, which hold on every platform. See CONTRIBUTING.md.
 expect_snapshot_boot_data <- function(x, name, digits = 6, min_pboot = 0.9, max_pboot = 1) {
   if (!is.na(min_pboot) && min_pboot > 0) {
-    testthat::expect_true(all(x$pboot >= min_pboot))
+    testthat::expect_gte(min(x$pboot), min_pboot)
   }
-  if (!is.na(min_pboot) && max_pboot < 1) {
-    testthat::expect_true(all(x$pboot <= max_pboot))
+  if (!is.na(max_pboot) && max_pboot < 1) {
+    testthat::expect_lte(max(x$pboot), max_pboot)
   }
   x$pboot <- NULL
   expect_snapshot_data(x, name, digits = digits)
 }
 
 expect_snapshot_data <- function(x, name, digits = 6, delist = FALSE) {
-  fun <- function(x) if(is.numeric(x)) signif(x, digits = digits) else x
-  x <- dplyr::mutate(x, dplyr::across(where(is.numeric), fun))
+  fun <- function(x) if (is.numeric(x)) signif(x, digits = digits) else x
+  x <- dplyr::mutate(x, dplyr::across(dplyr::where(is.numeric), fun))
 
-  if(!delist) {
+  if (!delist) {
     lapply_fun <- function(x) I(lapply(x, fun))
-  x <- dplyr::mutate(x, dplyr::across(dplyr::where(is.list), lapply_fun))
+    x <- dplyr::mutate(x, dplyr::across(dplyr::where(is.list), lapply_fun))
   } else {
-      n <- nrow(x)
-      x <- dplyr::mutate(x, dplyr::across(where(is.list), \(.x) rep("list", n)))
+    n <- nrow(x)
+    x <- dplyr::mutate(x, dplyr::across(dplyr::where(is.list), \(.x) rep("list", n)))
   }
-   path <- save_csv(x)
+  path <- save_csv(x)
   testthat::expect_snapshot_file(
     path,
     paste0(name, ".csv"),
     compare = testthat::compare_file_text
   )
-  }
-
-ep <- function(text) {
-  invisible(eval(parse(text = text)))
 }
 
 test_dist2 <- function(dist, upadj = 0) {
+  rdist <- get(paste0("ssd_r", dist), envir = asNamespace("ssdtools"))
   withr::with_seed(97, {
-    data <- data.frame(Conc = ep(glue::glue("ssd_r{dist}(500)")))
+    data <- data.frame(Conc = rdist(500))
   })
   fits <- ssd_fit_dists(data = data, dists = dist)
   tidy <- tidy(fits)
@@ -94,12 +91,12 @@ test_dist2 <- function(dist, upadj = 0) {
   tidy$lower <- tidy$est - tidy$se * 3
   tidy$upper <- tidy$est + tidy$se * 3
 
-  default <- ep(glue::glue("formals(ssd_r{dist})"))
+  default <- formals(rdist)
   default$n <- NULL
   default$chk <- NULL
   default <- data.frame(term = names(default), default = unlist(default))
 
-  tidy <- merge(tidy, default, by = "term", all = "TRUE")
-  testthat::expect_true(all(tidy$default > tidy$lower - upadj))
-  testthat::expect_true(all(tidy$default < tidy$upper + upadj))
+  tidy <- merge(tidy, default, by = "term", all = TRUE)
+  testthat::expect_gt(min(tidy$default - (tidy$lower - upadj)), 0)
+  testthat::expect_lt(max(tidy$default - (tidy$upper + upadj)), 0)
 }

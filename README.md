@@ -33,7 +33,6 @@ You can install the development version of ssdtests from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("remotes")
 pak::pak("bcgov/ssdtests")
 ```
 
