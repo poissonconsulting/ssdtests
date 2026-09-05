@@ -61,22 +61,22 @@ Shared helpers in `tests/testthat/helpers.R` support the common patterns:
 
 ## Snapshot stability
 
-Two kinds of snapshot are used.
+Snapshots are generated on macOS and every one of them reproduces on the
+GitHub Actions macOS runner, so the regular R-CMD-check compares them all on
+that platform.
+Most also reproduce on Linux and Windows.
+Point estimates and tidy tables are rounded to 4-6 significant figures via the
+`digits` argument of `expect_snapshot_data()` so that minor cross-platform
+maximum-likelihood differences do not cause failures.
 
-Deterministic snapshots, such as point estimates and tidy tables, run on every
-platform.
-They are rounded to 4-6 significant figures via the `digits` argument of
-`expect_snapshot_data()` so that minor cross-platform maximum-likelihood
-differences do not cause failures.
+A minority of snapshots are platform-specific: some bootstrap compatibility
+limits (`lcl`, `ucl`, `se` from `ssd_hc(ci = TRUE)` and `ssd_hp(ci = TRUE)`),
+some `sgompertz()` fits, and a few fits that fail to converge on one platform.
+These are guarded with `skip_on_os()` naming only the platforms on which they
+fail, so the structural assertions still run everywhere.
 
-Bootstrap confidence-limit snapshots (`lcl`, `ucl`, `se` from
-`ssd_hc(ci = TRUE)` and `ssd_hp(ci = TRUE)`) are not reproducible across
-BLAS/LAPACK implementations.
-They are guarded with `skip_on_ci()` placed before the bootstrap call, so the
-expensive, platform-dependent comparison runs only locally.
-
-Because most bootstrap tests are `skip_on_ci()`, they compare only on the
-machine that generated them.
+The `full-tests` workflow runs the whole suite on all three platforms weekly
+and on demand, and uploads any changed snapshots as an artifact.
 
 ## Curated-dataset regression tables
 
@@ -120,13 +120,13 @@ overall and per-file coverage:
 Rscript scripts/ssdtools-coverage.R
 ```
 
-Run it locally rather than on CI, because the `skip_on_ci()` tests are where
-most of the coverage comes from.
+Run it locally on macOS, where no snapshot tests are skipped.
 
 ## Running the tests
 
 Run the suite with `testthat::test_local()` or `devtools::test()`.
-Most bootstrap and stress tests are `skip_on_ci()` and so run only locally.
+Only `test-fit-random-small.R` is `skip_on_ci()`, because its 20000 fits take
+hours; everything else runs on CI.
 Snapshots are generated locally (macOS); review changes with
 `testthat::snapshot_review()` and accept with `testthat::snapshot_accept()`.
 

@@ -1,6 +1,7 @@
-# Runs the complete ssdtests suite on every platform with the skip_on_ci()
-# guards disabled, so the exact bootstrap and unstable-fit snapshots are
-# compared somewhere other than a developer's machine.
+# Weekly drift check: runs the complete ssdtests suite on every platform with
+# CI=false so only the skip_on_os() guards apply. Platform-specific snapshots
+# are skipped where they are known not to reproduce; everything else is
+# compared on all three platforms.
 #
 # test-fit-random-small.R is excluded: 20000 fits take hours and add no
 # snapshot coverage.

@@ -3,8 +3,6 @@ test_that("lnorm_lnorm", {
 })
 
 test_that("lnorm_lnorm fits anonb", {
-  skip_on_ci()
-
   data <- ssddata::anon_b
   withr::with_seed(99, {
     fit <- ssd_fit_dists(
@@ -21,7 +19,7 @@ test_that("lnorm_lnorm fits anonb", {
 })
 
 test_that("lnorm_lnorm non-bimodal 1000 data", {
-  skip_on_ci()
+  skip_on_os("windows")
 
   # fmt: skip
   data <- data.frame(Conc = c(
