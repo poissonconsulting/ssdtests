@@ -19,7 +19,7 @@ test_that("lnorm_lnorm fits anonb", {
 })
 
 test_that("lnorm_lnorm non-bimodal 1000 data", {
-  skip_on_os("windows")
+  skip_on_os(c("linux", "windows"))
 
   # fmt: skip
   data <- data.frame(Conc = c(

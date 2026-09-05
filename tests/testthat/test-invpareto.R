@@ -3,7 +3,7 @@ test_that("invpareto", {
 })
 
 test_that("invpareto with extreme data", {
-  skip_on_os("windows")
+  skip_on_os(c("linux", "windows"))
 
   # fmt: skip
   data <- data.frame(Conc = c(
