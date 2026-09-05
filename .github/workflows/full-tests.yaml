@@ -1,0 +1,59 @@
+# Runs the complete ssdtests suite on macOS with the skip_on_ci() guards
+# disabled, so the exact bootstrap and unstable-fit snapshots (generated on
+# macOS) are compared somewhere other than a developer's machine.
+#
+# test-fit-random-small.R is excluded: 20000 fits take hours and add no
+# snapshot coverage.
+name: full-tests
+on:
+  schedule:
+    - cron: "0 12 * * 1"
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - .github/workflows/full-tests.yaml
+permissions:
+  contents: read
+jobs:
+  full-tests:
+    runs-on: macos-latest
+    timeout-minutes: 180
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      NOT_CRAN: true
+      R_KEEP_PKG_SOURCE: yes
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::devtools, local::.
+          needs: check
+
+      - name: Run full test suite with CI skips disabled
+        env:
+          CI: false
+        run: |
+          devtools::test(
+            filter = "^(?!fit-random-small)",
+            perl = TRUE,
+            reporter = testthat::ProgressReporter$new(show_praise = FALSE),
+            stop_on_failure = TRUE
+          )
+        shell: Rscript {0}
+
+      - name: Upload new snapshots on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: snapshot-failures
+          path: |
+            tests/testthat/_snaps/**/*.new.*
+            tests/testthat/_snaps/*.new.md
+          if-no-files-found: ignore
