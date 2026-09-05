@@ -3,7 +3,7 @@ test_that("ssd_fit_dists computable = TRUE allows for fits without standard erro
   data$Other <- data$Conc
   data$Conc <- data$Conc / max(data$Conc)
 
-  skip_on_ci()
+  skip_on_os(c("linux", "windows"))
   expect_snapshot({
     fits <- ssd_fit_dists(
       data,

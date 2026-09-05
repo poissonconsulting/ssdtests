@@ -1,5 +1,4 @@
 test_that("gompertz", {
-  skip_on_ci()
   test_dist2("gompertz")
 })
 
@@ -8,8 +7,6 @@ test_that("bootstrap gompertz with problem data", {
     data <- data.frame(Conc = ssd_rgompertz(6, location = 0.6, shape = 0.07))
     fit <- ssdtools::ssd_fit_dists(data, dists = "gompertz")
   })
-
-  skip_on_ci()
   withr::with_seed(99, {
     hc <- ssd_hc(
       fit,
@@ -25,7 +22,7 @@ test_that("bootstrap gompertz with problem data", {
 })
 
 test_that("sgompertz completely unstable!", {
-  skip_on_ci() # as incredibly unstable
+  skip_on_os("linux") # as incredibly unstable
   # fmt: skip
   x <- c(
     3.15284072848962, 1.77947821504531, 0.507778085984185, 1.650387414067,
@@ -44,7 +41,7 @@ test_that("sgompertz completely unstable!", {
 })
 
 test_that("sgompertz with initial values still unstable!", {
-  skip_on_ci() # as incredibly unstable
+  skip_on_os("linux") # as incredibly unstable
   # fmt: skip
   x <- c(
     3.15284072848962, 1.77947821504531, 0.507778085984185, 1.650387414067,
@@ -90,7 +87,6 @@ test_that("sgompertz with initial values still unstable!", {
 })
 
 test_that("sgompertz cant even fit some values", {
-  skip_on_ci() # as incredibly unstable
   x <- c(160, 800, 840, 1500, 8200, 12800, 22000, 38000, 60900, 63000)
   expect_snapshot(
     {
@@ -104,7 +100,6 @@ test_that("sgompertz cant even fit some values", {
 })
 
 test_that("sgompertz cant even initialize lots of values", {
-  skip_on_ci()
   # fmt: skip
   x <- c(
     38.696580321462, 41.0167488906729, 39.5529154651536, 40.1225506655899,

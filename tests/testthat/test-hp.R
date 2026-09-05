@@ -16,7 +16,7 @@ test_that("ssd_hp cis with error and multiple dists", {
     min_pmix = 0.1
   )
   expect_identical(attr(fit, "min_pmix"), 0.1)
-  skip_on_ci()
+  skip_on_os(c("linux", "windows"))
   withr::with_seed(99, {
     hp_err_two <- ssd_hp(
       fit,
@@ -233,22 +233,13 @@ test_that("hp multi_ci lnorm default 100", {
   testthat::expect_snapshot({
     hp_average
   })
-  skip_on_ci()
-  # ── Failure ('test-hp-root.R:79:3'): hp multi_ci lnorm default 100 ─────────────────
-  # Snapshot of code has changed:
-  #   old[4:7] vs new[4:7]
-  # # A tibble: 1 x 10
-  # dist     conc   est    se   lcl   ucl    wt method     nboot pboot
-  # <chr>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <chr>      <dbl> <dbl>
-  #   -   1 average     1  3.90  3.57 0.347  11.2     1 parametric   100  0.86
-  #   +   1 average     1  3.90  2.89 0.347  11.2     1 parametric   100  0.86
   testthat::expect_snapshot({
     hp_multi
   })
 })
 
 test_that("ssd_hp cis with error", {
-  skip_on_ci()
+  skip_on_os(c("linux", "windows"))
 
   withr::with_seed(99, {
     conc <- ssd_rlnorm_lnorm(
@@ -290,8 +281,6 @@ test_that("ssd_hp cis with error", {
 })
 
 test_that("ssd_hp comparable parametric and non-parametric big sample size", {
-  skip_on_ci()
-
   withr::with_seed(99, {
     data <- data.frame(Conc = ssd_rlnorm(10000, 2, 1))
     fit <- ssd_fit_dists(data, dists = "lnorm")
