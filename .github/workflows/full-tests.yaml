@@ -1,6 +1,6 @@
-# Runs the complete ssdtests suite on macOS with the skip_on_ci() guards
-# disabled, so the exact bootstrap and unstable-fit snapshots (generated on
-# macOS) are compared somewhere other than a developer's machine.
+# Runs the complete ssdtests suite on every platform with the skip_on_ci()
+# guards disabled, so the exact bootstrap and unstable-fit snapshots are
+# compared somewhere other than a developer's machine.
 #
 # test-fit-random-small.R is excluded: 20000 fits take hours and add no
 # snapshot coverage.
@@ -16,8 +16,13 @@ permissions:
   contents: read
 jobs:
   full-tests:
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}
+    name: full-tests (${{ matrix.os }})
     timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       NOT_CRAN: true
@@ -52,7 +57,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: snapshot-failures
+          name: snapshot-failures-${{ matrix.os }}
           path: |
             tests/testthat/_snaps/**/*.new.*
             tests/testthat/_snaps/*.new.md
