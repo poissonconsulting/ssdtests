@@ -26,10 +26,10 @@ URL: https://github.com/poissonconsulting/ssdtests,
 BugReports: https://github.com/poissonconsulting/ssdtests/issues
 Depends: 
     R (>= 4.1),
-    ssdtools (>= 2.6.0)
+    ssdtools (>= 2.7.0)
 Imports:
     chk,
-    ssddata (>= 1.0.0)
+    ssddata (> 1.0.0) ## units changed in 1.0.0.9000
 Suggests:
     doFuture,
     dplyr,
