@@ -29,7 +29,7 @@ Depends:
     ssdtools (>= 2.7.0)
 Imports:
     chk,
-    ssddata (> 1.0.0) ## units changed in 1.0.0.9000
+    ssddata (>= 1.0.0.9000)
 Suggests:
     doFuture,
     dplyr,
