@@ -1,6 +1,4 @@
 test_that("plot geoms", {
-  skip_on_ci()
-
   gp <- ggplot2::ggplot(boron_pred) +
     geom_ssdpoint(data = ssddata::ccme_boron, ggplot2::aes(x = Conc)) +
     geom_ssdsegment(
@@ -16,8 +14,6 @@ test_that("plot geoms", {
 })
 
 test_that("ssd_plot censored data", {
-  skip_on_ci()
-
   data <- ssddata::ccme_boron
   data$Other <- data$Conc * 2
   expect_snapshot_plot(

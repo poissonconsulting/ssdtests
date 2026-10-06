@@ -5,7 +5,7 @@ test_that("ssd_hc passing all boots ccme_chloride lnorm_lnorm", {
     at_boundary_ok = TRUE,
     dists = c("lnorm_lnorm", "llogis_llogis")
   )
-  skip_on_ci()
+  skip_on_os(c("linux", "windows"))
   withr::with_seed(102, {
     hc <- ssd_hc(fits, ci = TRUE, nboot = 1000, average = FALSE)
   })
@@ -32,7 +32,7 @@ test_that("ssd_hc cis with error and multiple dists", {
     min_pmix = 0.1
   )
   expect_identical(attr(fit, "min_pmix"), 0.1)
-  skip_on_ci()
+  skip_on_os(c("linux", "windows"))
   withr::with_seed(99, {
     hc_err_two <- ssd_hc(
       fit,
@@ -183,25 +183,13 @@ test_that("hc multi_ci lnorm default 100", {
   testthat::expect_snapshot({
     hc_average
   })
-
-  # not sure why hc multi_ci is different on windows
-  # ══ Failed tests ════════════════════════════════════════════════════════════════
-  # ── Failure ('test-hc-root.R:77:3'): hc multi_ci lnorm default 100 ─────────────────
-  # Snapshot of code has changed:
-  #   old[4:7] vs new[4:7]
-  # # A tibble: 1 x 10
-  # dist    percent   est    se   lcl   ucl    wt method     nboot pboot
-  # <chr>     <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <chr>      <dbl> <dbl>
-  #   -   1 average       5  1.26 0.781 0.331  3.25     1 parametric   100  0.86
-  #   +   1 average       5  1.26 0.769 0.410  3.25     1 parametric   100  0.86
-  skip_on_ci()
   testthat::expect_snapshot({
     hc_multi
   })
 })
 
 test_that("ssd_hc cis with error", {
-  skip_on_ci()
+  skip_on_os("linux")
 
   withr::with_seed(99, {
     conc <- ssd_rlnorm_lnorm(
@@ -239,8 +227,6 @@ test_that("ssd_hc cis with error", {
 })
 
 test_that("ssd_hc comparable parametric and non-parametric big sample size", {
-  skip_on_ci()
-
   withr::with_seed(99, {
     data <- data.frame(Conc = ssd_rlnorm(10000, 2, 1))
     fit <- ssd_fit_dists(data, dists = "lnorm")
@@ -269,8 +255,6 @@ test_that("ssd_hc comparable parametric and non-parametric big sample size", {
 })
 
 test_that("not all estimates if fail", {
-  skip_on_ci()
-
   dir <- withr::local_tempdir()
 
   fit <- ssd_fit_dists(ssddata::ccme_boron, dists = c("lnorm", "lnorm_lnorm"))

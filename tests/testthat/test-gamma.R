@@ -20,6 +20,5 @@ test_that("gamma parameters are extremely unstable", {
 
   tidy <- tidy(fits)
   expect_s3_class(tidy, "tbl")
-  skip_on_ci() # not sure why gamma shape is 908 on GitHub actions windows and 841 on GitHub actions ubuntu
   expect_snapshot_data(tidy, "tidy_gamma_unstable", digits = 1)
 })
