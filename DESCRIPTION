@@ -28,7 +28,6 @@ Depends:
     ssdtools (>= 2.7.0)
 Suggests:
     chk,
-    ssddata (>= 1.0.0.9000),
     doFuture,
     dplyr,
     foreach,
@@ -38,6 +37,7 @@ Suggests:
     purrr,
     readr,
     rmarkdown,
+    ssddata (>= 1.0.0.9000),
     testthat (>= 3.0.0),
     tibble,
     tidyr,
