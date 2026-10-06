@@ -21,6 +21,14 @@
       [1] -2.602139
       
 
+---
+
+    Code
+      ssdtools:::sgompertz(data)
+    Condition
+      Error in `checkwz()`:
+      ! Some elements in the working weights variable 'wz' are not finite
+
 # sgompertz with initial values still unstable!
 
     Code
@@ -73,6 +81,14 @@
       $log_shape
       [1] -669.3178
       
+
+---
+
+    Code
+      ssdtools:::sgompertz(sdata)
+    Condition
+      Error in `checkwz()`:
+      ! Some elements in the working weights variable 'wz' are not finite
 
 # sgompertz cant even fit some values
 
