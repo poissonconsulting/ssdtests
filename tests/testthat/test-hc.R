@@ -315,3 +315,17 @@ test_that("not all estimates if fail", {
     )
   )
 })
+
+test_that("ssd_hc cis may not bracket estimate", {
+  fits <- ssd_fit_dists(ssddata::ccme_boron)
+  withr::local_seed(4)
+  hc <- ssd_hc(fits, ci = TRUE, nboot = 2)
+  expect_true(all(hc$lcl > hc$est))
+})
+
+test_that("ssd_plot cis boron 2 bootstraps", {
+  fits <- ssd_fit_dists(ssddata::ccme_boron)
+  withr::local_seed(4)
+  pred <- predict(fits, ci = TRUE, nboot = 2)
+  expect_snapshot_plot(ssd_plot(ssddata::ccme_boron, pred), "boron_pred_ci_nboot5")
+})
