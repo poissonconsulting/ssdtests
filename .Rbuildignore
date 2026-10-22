@@ -2,7 +2,6 @@
 ^\.Rproj\.user$
 ^\.claude$
 ^\.github$
-^data-raw$
 ^docs$
 ^pkgdown$
 ^revdep$
@@ -16,3 +15,5 @@
 ^README\.Rmd$
 ^vignettestatic$
 ^vignettes/articles$
+^[.]?air[.]toml$
+^\.vscode$

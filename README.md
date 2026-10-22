@@ -7,7 +7,7 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![R-CMD-check](https://github.com/poissonconsulting/ssdtests/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/poissonconsulting/ssdtests/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/bcgov/ssdtests/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bcgov/ssdtests/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of ssdtests is to hold the slow and unstable tests for the
@@ -33,7 +33,6 @@ You can install the development version of ssdtests from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("remotes")
 pak::pak("bcgov/ssdtests")
 ```
 
